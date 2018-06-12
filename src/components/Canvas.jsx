@@ -4,7 +4,6 @@ import Sky from './Sky';
 import Ground from './Ground';
 import CannonBase from './CannonBase';
 import CannonPipe from './CannonPipe';
-import CannonBall from './CannonBall';
 import CurrentScore from './CurrentScore';
 import FlyingObject from './FlyingObject';
 import StartGame from './StartGame';
@@ -12,6 +11,7 @@ import Title from './Title';
 import { viewBox } from '../utils/constants';
 import Leaderboard from './Leaderboard';
 import { signIn } from 'auth0-web';
+import CannonBall from './CannonBall';
 import Heart from './Heart';
 
 const Canvas = (props) => {
@@ -21,7 +21,7 @@ const Canvas = (props) => {
             x: -180 - (i * 70),
             y: 35
         };
-        lives.push(<Heart key={i} position={heartPosition}/>);
+        lives.push(<Heart key={i} position={heartPosition} />);
     }
     
     return (
@@ -39,17 +39,18 @@ const Canvas = (props) => {
         </defs>
         <Sky />
         <Ground />
-
+        
         {props.gameState.cannonBalls.map(cannonBall => (
             <CannonBall
             key={cannonBall.id}
             position={cannonBall.position}
             />
         ))}
-
+        
         <CannonPipe rotation={props.angle} />
         <CannonBase />
         <CurrentScore score={props.gameState.kills} />
+        
         { !props.gameState.started &&
             <g>
             <StartGame onClick={() => props.startGame()} />
@@ -64,6 +65,7 @@ const Canvas = (props) => {
             position={flyingObject.position}
             />
         ))}
+        
         {lives}
         </svg>
     );
@@ -75,13 +77,6 @@ Canvas.propTypes = {
         started: PropTypes.bool.isRequired,
         kills: PropTypes.number.isRequired,
         lives: PropTypes.number.isRequired,
-        flyingObjects: PropTypes.arrayOf(PropTypes.shape({
-            position: PropTypes.shape({
-                x: PropTypes.number.isRequired,
-                y: PropTypes.number.isRequired
-            }).isRequired,
-            id: PropTypes.number.isRequired,
-        })).isRequired,
     }).isRequired,
     trackMouse: PropTypes.func.isRequired,
     startGame: PropTypes.func.isRequired,

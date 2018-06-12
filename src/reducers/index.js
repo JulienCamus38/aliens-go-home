@@ -11,12 +11,12 @@ const initialGameState = {
     lastObjectCreatedAt: new Date(),
     currentPlayer: null,
     players: null,
+    cannonBalls: [],
 }
 
 const initialState = {
     angle: 45,
     gameState: initialGameState,
-    cannonBalls: [],
 };
 
 function reducer(state = initialState, action) {
